@@ -4,6 +4,6 @@ title: nutcracker
 description: homework question
  
 ---
-![nutcracker work](/sp26-portfolio-awestenholzsmith/assets/images/nutcrackerp1.png)
+![nutcracker work]({{"/assets/images/nutcrackerp1.png"|relative_url}})
 
-![nutcracker work](sp26-portfolio-awestenholzsmith/assets/images/nutcrackerp2.png)
+![nutcracker work]({{"/assets/images/nutcrackerp2.png"|relative_url}})
