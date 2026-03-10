@@ -3,7 +3,8 @@ layout: project
 title: nutcracker
 description: homework question
 
-image: /assets/images/function-graph.png
+image: /assets/images/nutcrackerp1.png
+image: /assets/images/nutcracker p2.png
 ---
 
 
