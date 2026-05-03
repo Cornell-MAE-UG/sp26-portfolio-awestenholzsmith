@@ -99,69 +99,61 @@ To eliminate the grip-strength constraint, I replaced the manual squeeze with a 
 
 ## HW12 Extension — Flexible Handles
 
-In the HW4 design the handles were treated as rigid. Now I model each handle as a **beam that bends** under the combined transverse loads from the nut at B and from the actuator at C.
+In the HW4 design I treated the handles as rigid. For this part, I'm modeling each handle as a beam that bends from the transverse loads coming from the nut at B and the actuator at C.
 
-This analysis is done on the **linear-actuator version** of the design, since the assignment text specifies *"forces from the nut and from the actuator."*
+I did this analysis on the linear-actuator version since the assignment says "forces from the nut and from the actuator."
 
 ### Idealization
 
-I model one half-handle as a **cantilever fixed at the pivot A**, of length L = L<sub>1</sub> = 222 mm, with two point loads applied transverse to the beam axis:
+I treated one half-handle as a cantilever fixed at the pivot A, length L = L<sub>1</sub> = 222 mm, with two transverse point loads:
 
-- The nut reaction at point B, distance *a<sub>1</sub>* = L<sub>2</sub> = 27 mm from A.
-- The actuator force at point C, distance *a<sub>2</sub>* = L<sub>1</sub> = 222 mm from A.
+- the nut reaction at B, a<sub>1</sub> = L<sub>2</sub> = 27 mm from A
+- the actuator force at C, a<sub>2</sub> = L<sub>1</sub> = 222 mm from A
 
-**Why a cantilever?** The pivot at A is a pin — it allows rotation of either arm about A but provides no moment reaction. However, by mirror symmetry, when both arms are loaded identically each arm's slope at A is zero relative to the centerline. The pivot is therefore *equivalent to a fixed (cantilever) support* for the analysis of one arm in symmetric loading.
+Why a cantilever? The pin at A is just a pin so technically it can rotate freely and provides no moment reaction. But because the loading is symmetric on both arms, by symmetry the slope at A on each arm is zero, so it acts like a fixed support for this analysis.
 
 ### Forces and Their Transverse Components
 
 | Symbol | Value | Direction | Where applied |
 |---|---|---|---|
-| F<sub>act</sub> | 56 lbf ≈ 249 N | inward (toward centerline) | C, at x = L<sub>1</sub> |
-| F<sub>nut</sub> = (L<sub>1</sub>/L<sub>2</sub>) · F<sub>act</sub> = 8.23 · F<sub>act</sub> | ≈ 2050 N | outward (away from centerline) | B, at x = L<sub>2</sub> |
+| F<sub>act</sub> | 56 lbf ≈ 249 N | inward | C, at x = L<sub>1</sub> |
+| F<sub>nut</sub> = (L<sub>1</sub>/L<sub>2</sub>) · F<sub>act</sub> = 8.23 · F<sub>act</sub> | ≈ 2050 N | outward | B, at x = L<sub>2</sub> |
 
-The handle sits at angle θ = 30° from the centerline. The applied forces are perpendicular to the centerline, so projecting onto the direction transverse to the beam:
+The handle is at θ = 30° from the centerline and the forces are perpendicular to the centerline, so the transverse components on the beam come out to each force times cos θ:
 
-- F<sub>1</sub> = F<sub>nut</sub> · cos θ = 2050 · cos 30° ≈ **+1775 N** at *x = a<sub>1</sub>* (outward)
-- F<sub>2</sub> = F<sub>act</sub> · cos θ = 249 · cos 30° ≈ **−216 N** at *x = a<sub>2</sub>* (inward)
+- F<sub>1</sub> = 2050 · cos 30° ≈ +1775 N at x = a<sub>1</sub> (outward)
+- F<sub>2</sub> = 249 · cos 30° ≈ −216 N at x = a<sub>2</sub> (inward)
 
-The two transverse loads point in opposite directions: the nut pushes outward, the actuator inward.
+So the two transverse loads point in opposite directions: nut outward, actuator inward.
 
 ### Part (a) — Location of Maximum Deflection
 
-Using Beer Ch15 cantilever deflection formulas + superposition. For a cantilever with a point load P at distance *a* from the wall:
+Using Beer Ch15 cantilever deflection equations with superposition. For a cantilever with a point load P at distance a:
 
-- For *x ≤ a*:  *δ(x) = P x²(3a − x) / (6EI)*
-- For *x > a*:  *δ(x) = P a²(3x − a) / (6EI)*
+- for x ≤ a:  δ(x) = P x²(3a − x) / (6EI)
+- for x > a:  δ(x) = P a²(3x − a) / (6EI)
 
-Superposing F<sub>1</sub> at *a<sub>1</sub>* and F<sub>2</sub> at *a<sub>2</sub>*, the slope dδ/dx in the region a<sub>1</sub> ≤ x ≤ a<sub>2</sub> is:
+After superposing both loads, I checked the slope dδ/dx in the region a<sub>1</sub> ≤ x ≤ a<sub>2</sub>. Setting it to zero gives x ≈ 0.014 m which is outside that region, so inside the region the slope doesn't change sign and theres no internal extremum. Same is true on 0 ≤ x ≤ a<sub>1</sub>.
 
-dδ/dx = (1 / (2EI)) · [F<sub>1</sub> · a<sub>1</sub>² + F<sub>2</sub> · x · (2a<sub>2</sub> − x)]
+So the deflection is monotonic across the whole beam, and max deflection happens at the tip, x = L<sub>1</sub> = 222 mm (point C, where the actuator pushes).
 
-Plugging in: F<sub>1</sub>·a<sub>1</sub>² = 1775 × (0.027)² ≈ 1.29; F<sub>2</sub>·x·(2a<sub>2</sub>−x) = −216 · x · (0.444 − x). Setting dδ/dx = 0 gives x ≈ 0.014 m, **outside** the region a<sub>1</sub> ≤ x ≤ a<sub>2</sub>. Inside that region dδ/dx is therefore single-signed (negative — checked at x = a<sub>1</sub> and x = a<sub>2</sub>), and a similar argument shows dδ/dx is single-signed on 0 ≤ x ≤ a<sub>1</sub>.
+The magnitude at the tip works out to:
 
-**Conclusion:** δ(x) is monotonic over the whole beam — there is no internal extremum — so the deflection has its maximum magnitude at the **tip, x = L<sub>1</sub> = 222 mm (point C, where the actuator pushes)**.
+δ<sub>max</sub> · EI ≈ (1/6) · [1775 · (0.027)² · (3·0.222 − 0.027) + 2·(−216)·(0.222)³]
+                   ≈ (1/6) · [0.827 − 4.726]
+                   ≈ −0.650 N · m³
 
-The magnitude is found by evaluating the superposition at x = L<sub>1</sub>:
-
-δ<sub>max</sub> = (1 / (6EI)) · [F<sub>1</sub> · a<sub>1</sub>² · (3 L<sub>1</sub> − a<sub>1</sub>) + 2 F<sub>2</sub> L<sub>1</sub>³]
-
-Plugging in numbers:
-
-δ<sub>max</sub> · EI ≈ (1 / 6) · [1775 · (0.027)² · (3·0.222 − 0.027) + 2·(−216)·(0.222)³]
-                   ≈ (1 / 6) · [0.827 − 4.726]
-                   ≈ **−0.650 N · m³**
-
-So |δ<sub>max</sub>| ≈ **0.650 / (EI)**, in the **inward** direction (the actuator dominates the bending).
+So |δ<sub>max</sub>| ≈ 0.650 / (EI), in the inward direction (the actuator dominates).
 
 ### Part (b) — Cross-Section + Material Selection
 
-**Constraint:** vertical elastic deflection below 2% of beam length.
+The constraint is δ<sub>max</sub> < 2% of length:
 
-> δ<sub>max</sub> < 0.02 × L<sub>1</sub> = 0.02 × 0.222 m = **4.44 mm**
+> δ<sub>max</sub> < 0.02 × 0.222 m = 4.44 mm
 
-This requires **EI > 0.650 / 0.00444 ≈ 146 N · m²**.
+That requires EI > 0.650 / 0.00444 ≈ 146 N · m².
 
-**Mass-efficiency criterion.** For fixed length, mass is *m = ρAL*, and stiffness is *EI*. Mass-efficient sections have a high *I/A* (radius of gyration) — favoring **hollow circular tubes** and **I-beams** over solid rods. Mass-efficient materials have a high *E/ρ*. For common engineering materials:
+For the mass-efficient part, mass is m = ρAL and stiffness is EI, so for a fixed length you want a high I/A (so hollow tubes or I-beams beat solid rods) and a high E/ρ.
 
 | Material | E (GPa) | ρ (kg/m³) | E/ρ (MJ/kg) |
 |---|---|---|---|
@@ -169,36 +161,32 @@ This requires **EI > 0.650 / 0.00444 ≈ 146 N · m²**.
 | Aluminum 6061-T6 | 69 | 2700 | 25.6 |
 | CFRP (carbon fiber) | 130 | 1600 | 81.3 |
 
-Aluminum and steel have similar specific stiffness. CFRP is best on paper, but for a manufacturable, machinable, affordable nutcracker handle I select **aluminum 6061-T6** (low density, easy machining, common stock).
+Aluminum and steel come out about even on specific stiffness. CFRP is best on paper but harder to manufacture and more expensive, so I picked aluminum 6061-T6 since its low density, easy to machine, and common stock material.
 
-**Section sizing.** Trying a hollow circular aluminum tube of outer diameter D<sub>o</sub> and wall thickness t.
+Trying a hollow circular aluminum tube with outer diameter D<sub>o</sub> = 19 mm and wall thickness t = 1 mm (so the inner diameter is 17 mm):
 
-For **D<sub>o</sub> = 19 mm, t = 1 mm** (ID = 17 mm):
+- I = π(D<sub>o</sub>⁴ − D<sub>i</sub>⁴) / 64 = π(19⁴ − 17⁴) / 64 ≈ 2298 mm⁴ = 2.30 × 10⁻⁹ m⁴
+- A = π(D<sub>o</sub>² − D<sub>i</sub>²) / 4 ≈ 56.5 mm²
+- EI = 69 GPa × 2.30 × 10⁻⁹ m⁴ ≈ 159 N · m² (more than the 146 needed) ✓
+- δ<sub>max</sub> = 0.650 / 159 ≈ 4.10 mm, less than 4.44 mm ✓
+- mass per handle = ρ · A · L = 2700 × 56.5 × 10⁻⁶ × 0.222 ≈ 0.034 kg ≈ 34 g
 
-- I = π(D<sub>o</sub>⁴ − D<sub>i</sub>⁴) / 64 = π(19⁴ − 17⁴) / 64 ≈ **2298 mm⁴ = 2.30 × 10⁻⁹ m⁴**
-- A = π(D<sub>o</sub>² − D<sub>i</sub>²) / 4 = π(361 − 289) / 4 ≈ **56.5 mm²**
-- EI = 69 GPa × 2.30 × 10⁻⁹ m⁴ ≈ **159 N · m²** > 146 N · m² ✓
-- Predicted δ<sub>max</sub> = 0.650 / 159 ≈ **4.10 mm** < 4.44 mm ✓
-- Mass per handle = ρ · A · L = 2700 × 56.5 × 10⁻⁶ × 0.222 ≈ **0.034 kg ≈ 34 g**
-
-A solid aluminum rod meeting the same constraint would need diameter ≈ 15 mm and weigh ≈ 106 g — about **3× heavier** for the same stiffness. The hollow tube is the mass-efficient choice.
+For comparison, a solid aluminum rod meeting the same stiffness would be about 15 mm in diameter and weigh around 106 g, which is about 3× more, so the hollow tube is a lot more mass-efficient.
 
 ### Part (c) — Final Design
 
-**Selected handle:** aluminum 6061-T6 hollow circular tube, **19 mm OD × 1 mm wall × 222 mm long**.
+Selected handle: aluminum 6061-T6 hollow circular tube, 19 mm OD × 1 mm wall × 222 mm long.
 
-**Predicted performance:** maximum deflection ≈ 4.10 mm at the tip (point C, where the actuator attaches), satisfying the 4.44 mm (2%) limit with ~7% margin.
+Predicted max deflection is around 4.10 mm at the tip (point C, where the actuator attaches), so it stays under the 4.44 mm (2%) limit with about a 7% margin.
 
-**Mass per handle:** ≈ 34 g; total mass of both arms ≈ 68 g (excluding pivot, jaws, and actuator).
-
-*A drawing of the final beam-handle design will be added here once sketched.*
+Mass per handle is about 34 g, so the total for both arms comes out to around 68 g (not counting the pivot, jaws, or the actuator itself).
 
 ### Assumptions and Limitations
 
-- **Symmetry assumption** justifies the cantilever boundary at A. If real loading is asymmetric (e.g., off-axis grip), the slope at A is nonzero and the deflection grows.
-- **Linear elastic, small deflection.** δ ≈ 4 mm out of 222 mm length (≈ 2%) is at the edge of where small-deflection beam theory holds.
-- **Transverse force only** is considered, as instructed. Axial components (F · sin θ ≈ 0.5 F) cause column compression but are neglected here. For F<sub>nut</sub> = 2050 N axial × sin 30° ≈ 1025 N, Euler buckling of a 222 mm aluminum tube is well above this load, so this is a safe simplification.
-- **Stress check.** The maximum bending moment at A is M<sub>max</sub> ≈ F<sub>1</sub>·a<sub>1</sub> + F<sub>2</sub>·a<sub>2</sub> ≈ 1775·0.027 + 216·0.222 ≈ 95.85 N·m. Bending stress σ = Mc/I = 95.85 × 0.0095 / (2.30 × 10⁻⁹) ≈ 396 MPa, which exceeds the yield strength of 6061-T6 (~276 MPa). **The deflection-optimal design fails on stress** — it would yield at the pivot under cracking load. A real design would need to thicken the wall near A (or use a higher-strength alloy / steel) to avoid yielding. *Flagging this as a limitation of the deflection-only criterion in the assignment.*
+- Symmetry assumption is what justifies the cantilever boundary at A. If the loading is asymmetric (off-axis grip etc.) the slope at A wouldn't be zero and the deflection grows.
+- Linear elastic, small deflection. δ ≈ 4 mm on a 222 mm length (about 2%) is right at the edge of where small-deflection beam theory holds.
+- Only transverse force is considered, as instructed. Axial components (F · sin θ ≈ 0.5 F) cause column compression but I neglected them. With F<sub>nut</sub> · sin 30° ≈ 1025 N axial, Euler buckling of the aluminum tube is way above this load so its safe to ignore.
+- Stress check: max bending moment at A is M<sub>max</sub> ≈ F<sub>1</sub>·a<sub>1</sub> + F<sub>2</sub>·a<sub>2</sub> ≈ 95.85 N·m. Bending stress σ = Mc/I = 95.85 × 0.0095 / (2.30 × 10⁻⁹) ≈ 396 MPa, which is more than the yield strength of 6061-T6 (~276 MPa). So the deflection-optimal design would actually yield at the pivot under cracking load, which is a real problem. A real design would probably need a thicker wall near A (or use steel or a higher-strength alloy) to avoid yielding.
 
 ## Acknowledgments and Sources
 
